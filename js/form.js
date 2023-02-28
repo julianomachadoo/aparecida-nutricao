@@ -4,7 +4,6 @@ botaoAdicionar.addEventListener("click", function (event) {
 
     var form = document.querySelector("#form-adiciona");
     var paciente = obtemPacienteDoFormulario(form);
-    var pacienteTr = montaTr(paciente);
     var erros = validaPaciente(paciente);
 
     if (erros.length > 0) {
@@ -12,14 +11,19 @@ botaoAdicionar.addEventListener("click", function (event) {
         return;
     }
 
-    var tabela = document.querySelector("#tabela-pacientes");
-    tabela.appendChild(pacienteTr);
+    adicionaPacienteNaTabela(paciente);
 
     form.reset();
     var mensagensErro = document.querySelector("#mensagens-erro");
     mensagensErro.innerHTML = "";
 
 });
+
+function adicionaPacienteNaTabela(paciente) {
+    var pacienteTr = montaTr(paciente);
+    var tabela = document.querySelector("#tabela-pacientes");
+    tabela.appendChild(pacienteTr);
+}
 
 function exibeMensagensDeErro(erros) {
     var ul = document.querySelector("#mensagens-erro");
@@ -70,8 +74,8 @@ function validaPaciente(paciente) {
     if (paciente.gordura.length == 0) erros.push("O campo gordura não pode ser vazio");
     if (!validaPeso(paciente.peso)) erros.push("Peso inválido");
     if (!validaAltura(paciente.altura)) erros.push("Altura inválida");
-    if (paciente.peso.length == 0) erros.push("O campo peso não pode ser vazio"); 
-    if (paciente.altura.length == 0) erros.push("O campo altura não pode ser vazio"); 
+    if (paciente.peso.length == 0) erros.push("O campo peso não pode ser vazio");
+    if (paciente.altura.length == 0) erros.push("O campo altura não pode ser vazio");
 
     return erros;
 }
